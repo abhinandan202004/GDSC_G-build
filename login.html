@@ -44,7 +44,7 @@
             </form>
             <form action="#" class="signup">
                <div class="field">
-                  <input type="text" id="username" placeholder="UserName" required>
+                  <input type="text" id="username" placeholder="USN number" required>
                </div>
                <div class="field">
                   <input type="email" id="email" placeholder="Email Address" required>
@@ -84,6 +84,9 @@
       import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
       import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-analytics.js";
       import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-auth.js";
+      import { getDatabase, ref, set, query, equalTo, onValue } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-database.js";
+      //import { getDatabase, ref, query, equalTo, onValue, set } from "firebase/database";
+
       // TODO: Add SDKs for Firebase products that you want to use
       // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -106,6 +109,7 @@
       const auth = getAuth();
       const provider = new GoogleAuthProvider();
       console.log(app);
+
 
 
 
@@ -133,31 +137,6 @@
       });
       //----- End
 
-      //----- Login code start	  
-      document.getElementById("login").addEventListener("click", function () {
-         var email = document.getElementById("login_email").value;
-         var password = document.getElementById("login_password").value;
-
-         signInWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-               // Signed in 
-               const user = userCredential.user;
-               console.log(user);
-               alert(user.email + " Login successfully!!!");
-               //   document.getElementById('logout').style.display = 'block';
-               window.location.href = "index.html";
-            })
-            .catch((error) => {
-               const errorCode = error.code;
-               const errorMessage = error.message;
-               console.log(errorMessage);
-               alert(errorMessage);
-            });
-
-
-      });
-      //----- End
-
       //----- Logout code start
       // document.getElementById("logout").addEventListener("click", function() {
       //     signOut(auth).then(() => {
@@ -171,6 +150,26 @@
       //       });
       // });
       // //----- End
+      // to get data from the FB server
+      // const userQuery = query(ref(db, 'users'),
+      //    equalTo("username", usersname),
+      //    equalTo("email", email)
+      // );
+
+      // // Attaching an event listener to the query
+      // onValue(userQuery, (snapshot) => {
+      //    // Retrieving the data from the snapshot
+      //    const userData = snapshot.val();
+
+      //    // Check if userData exists and do something with it
+      //    if (userData) {
+      //       // Assuming userData contains additional fields like usnNumber
+      //       const usnNumber = userData.usnNumber;
+      //       console.log("USN Number:", usnNumber);
+      //    } else {
+      //       console.log("No data found for the provided username and email.");
+      //    }
+      // });
 
    </script>
 
